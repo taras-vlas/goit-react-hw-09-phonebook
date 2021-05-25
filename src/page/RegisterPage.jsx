@@ -82,10 +82,8 @@ const RegisterPage = () => {
   return (
     <div className={classes.register}>
       {isLoading
-        ? (<Spinner type="TailSpin" color="#00BFFF" height={40} width={40} className="Spinner" timeout={3000} />         //<span>Loading ...</span>
-          )
-        : (
-            <form className={classes.form} onSubmit={handleSubmit}>
+        ? (<Spinner type="TailSpin" color="#00BFFF" height={40} width={40} className="Spinner" timeout={3000} /> )      //<span>Loading ...</span>
+        : (<form className={classes.form} onSubmit={handleSubmit}>
               <label className={classes.label}>
                 <span>name: </span>
                 <input type="name" value={name} onChange={handleChangeName} />

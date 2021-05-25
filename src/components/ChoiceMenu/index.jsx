@@ -21,22 +21,22 @@ const Content = () => {
               component: Component,
               isNotLoggedOn,
             }) =>
-              isProtected ? (
-                <PrivateRoute
-                  key={path}
-                  path={path}
-                  exact={exact}
-                  component={Component}
-                />
-              ) : (
-                <PublicRoute
-                  key={path}
-                  path={path}
-                  exact={exact}
-                  component={Component}
-                  isNotLoggedOn={isNotLoggedOn}
-                />
-              )
+              isProtected ? ( <PrivateRoute
+                                key={path}
+                                path={path}
+                                exact={exact}
+                                component={Component}
+                              />
+                            )
+                          : (
+                              <PublicRoute
+                                key={path}
+                                path={path}
+                                exact={exact}
+                                component={Component}
+                                isNotLoggedOn={isNotLoggedOn}
+                              />
+                            )
           )}
         </Switch>
       </Suspense>
