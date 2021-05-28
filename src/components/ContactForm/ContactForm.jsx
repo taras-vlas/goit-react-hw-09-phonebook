@@ -1,86 +1,117 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import styles from "./ContactForm.module.css";
+import { useState, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
-//import phonebookActions from '../../redux/phonebook/phonebook-actions';
-import phonebookOperations from '../../redux/phonebook/phonebook-operations';
+import { contactsOperations, contactsSelectors } from '../../redux/contacts';
 
-class ContactForm extends Component {
-  state = {
-    name: '',
-    number: ''
-  };
+import ButtonContact from '../ButtonContact';
 
-  handleChange = ({ target }) => {
-    const { name, value } = target;
+import styles from './ContactForm.module.scss';
 
-    this.setState({
+const initialState = {
+  name: '',
+  number: '',
+};
+
+// Компонент формы добавления контакта
+export default function ContactForm() {
+  const [state, setState] = useState(initialState);
+  const { name, number } = state;
+
+  const contacts = useSelector(contactsSelectors.getContacts); // Селектор всех контактов
+  const isLoading = useSelector(contactsSelectors.getLoading); // Селектор статуса загрузки
+
+  const dispatch = useDispatch();
+
+  // Диспатчит операцию добавления контакта + useCallback
+  const onSubmit = useCallback(
+    (name, number) => {
+      dispatch(contactsOperations.addContact(name, number));
+    },
+    [dispatch],
+  );
+
+  // Следит за инпутом
+  const hanldeChange = e => {
+    const { name, value } = e.currentTarget;
+
+    setState(prev => ({
+      ...prev,
       [name]: value,
-    })
-
+    }));
   };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const { name, number } = this.state;
+  // Метод на отправке формы
+  const hanldeSubmit = e => {
+    e.preventDefault();
 
-    if (name && number) {
-      this.props.onCreateContact(this.state.name, this.state.number);
-      return this.setState({ name: '', number: '' });  // alert (...) is already in contacts`);
+    const normalizedName = name.toLowerCase();
+
+    // Проверка на дубликат по имени
+    const nameInContacts = contacts.find(
+      contact => contact.name === normalizedName,
+    );
+
+    // Проверка на дубликат по номеру
+    const numberInContacts = contacts.find(
+      contact => contact.number === number,
+    );
+
+    // Отправка имени и номера после проверки
+    if (!nameInContacts && !numberInContacts) {
+      onSubmit(normalizedName, number); // Вызов операции добавления контакта
+
+      resetForm();
+      return;
     }
 
-    return null;
+    toast.warn(`😮 ${name} is already in contacts`);
   };
 
+  // Сброс полей формы (после отправки)
+  const resetForm = () => {
+    setState(initialState);
+  };
 
-  render() {
+  return (
+    <form className={styles.form} onSubmit={hanldeSubmit}>
+      <label className={styles.label}>
+        <span className={styles.text}>Name</span>
 
-    return (
-      <form className={styles.Form} onSubmit={this.handleSubmit}>
-        
-<label className={styles.Label}>
-            Name
-            <input
-                className={styles.Input}
-                type="text"
-                name="name"
-                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
-                required
-                value={this.state.name}
-                onChange={this.handleChange}
-            />
-          </label>
-          <label className={styles.Label}>
-            Number
-            <input
-                className={styles.Input}
-                type="tel"
-                name="number"
-                pattern="(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})"
-                title="Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
-                required
-                value={this.state.number}
-                onChange={this.handleChange}
-            />
-          </label>
-            <button className={styles.Button} type="submit">
-              Add contact
-            </button>
-      </form>
-    )
-  }
+        <input
+          type="text"
+          name="name"
+          placeholder="Enter name"
+          aria-label="Input your name"
+          className={styles.input}
+          value={name}
+          onChange={hanldeChange}
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
+          disabled={isLoading}
+          required
+        />
+      </label>
+
+      <label className={styles.label}>
+        <span className={styles.text}>Number</span>
+
+        <input
+          type="tel"
+          name="number"
+          placeholder="Enter phone number"
+          aria-label="Input your phone number"
+          className={styles.input}
+          value={number}
+          onChange={hanldeChange}
+          pattern="(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})"
+          title="Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
+          disabled={isLoading}
+          required
+        />
+      </label>
+
+      <ButtonContact />
+    </form>
+  );
 }
-
-const mapDispatchToProps = {
-  onCreateContact: phonebookOperations.addContact,
-};
-
-ContactForm.propTypes = {
-  onCreateContact: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-};
-
-export default connect(null, mapDispatchToProps)  (ContactForm);

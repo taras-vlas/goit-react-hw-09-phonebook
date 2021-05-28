@@ -1,15 +1,24 @@
-import { useSelector } from "react-redux";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { authSelectors } from '../redux/auth';
 
-const PublicRoute = (props) => {
-  const isLoggedOn = useSelector((state) => state.user.isLoggedOn);
-  const { isNotLoggedOn } = props;
+// - Если маршрут ограниченный, и пользователь залогинен, рендерит редирект на указанный роут
+// - В противном случае рендерит компонент
 
-  return !isNotLoggedOn || (isNotLoggedOn && !isLoggedOn)
-    ? ( 
-      <Route {...props} />
-      ) 
-    : null;
-};
+// Компонент публичного роута
+export default function PublicRoute({
+  redirectTo,
+  children,
+  ...routeProps
+}) {
+  const isLoggedIn = useSelector(authSelectors.getIsAuthenticated); // Селектор статуса авторизации
 
-export default PublicRoute;
+  return (
+    <Route {...routeProps}>
+      {isLoggedIn && routeProps.restricted
+        ? (<Redirect to={redirectTo} />)
+        : (children)
+      }
+    </Route>
+  );
+}

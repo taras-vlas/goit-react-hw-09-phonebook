@@ -1,93 +1,47 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import  Routes  from "../../routes";
-import { NavLink } from "react-router-dom";
-// import { A } from "hookrouter";
-import Button from "@material-ui/core/Button";
-import { logout } from "../../redux/user/user-operations";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import useStyles from "./UserMenuStyles";
+import { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { authSelectors, authOperations } from '../../redux/auth';
 
-const checkShowPage = (isProtected, isLoggedOn, isNotLoggedOn) => {
-  const showProtected = !isProtected || (isProtected && isLoggedOn);
-  const showLoggedOn = !isNotLoggedOn || (isNotLoggedOn && !isLoggedOn);
+import styles from './UserMenu.module.scss';
 
-  return showProtected && showLoggedOn;
-};
+// Компонент меню пользователя после авторизации
+export default function UserMenu() {
+  //const email = useSelector(authSelectors.getUserEmail); // Селектор почты юзера
+  const name = useSelector(authSelectors.getUserName);
 
-const UserMenu = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
-  const isLoggedOn = useSelector((state) => state.user.isLoggedOn);
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  // Диспатчит операцию выхода из профиля + useCallback
+  const onLogout = useCallback(() => dispatch(authOperations.logOut()), [
+    dispatch,
+  ]);
 
-  const handleClick = (e) => {
-    setAnchorEl(e.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLogOut = () => dispatch(logout());
   return (
-    <div    className={classes.container}>
-      <Button
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        Open Menu
-      </Button>
-            
-      <Menu
-        className={classes.menu}
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}        
-      >
-        {Routes.map(({ path, exact, label, isProtected, isNotLoggedOn }) => {
-          const showInMenu = checkShowPage(
-            isProtected,
-            isLoggedOn,
-            isNotLoggedOn
-          );
+    <div className={styles.profile}>
+      <div className={styles.thumb}>
+        <img
+          //src={`https://eu.ui-avatars.com/api/?background=2196f3&color=fff&&length=1&name=${email}`}
+          src={`https://eu.ui-avatars.com/api/?background=2196f3&color=fff&&length=1&name=${name}`}
+          alt="avatar"
+          title="Your avatar"
+          className={styles.avatar}
+        />
+      </div>
 
-          return (showInMenu
-            ? (
-              // <A href={path} key={path} className={classes.link}>
-              //   {label}
-              // </A>
-              <MenuItem onClick={handleClose}>
-                <NavLink
-                  activeClassName={classes.active}
-                  key={path}
-                  exact={exact}
-                  to={path}
-                >
-                  {label}
-                </NavLink>
-              </MenuItem>
-            )
-            : null
-          );
-        })}
-      </Menu>
-      
-      <Button
-        className={classes.button}
-        onClick={handleLogOut}
-        variant="contained"
-        color="primary"
+      <span className={styles.welcome}>
+        {/* Welcome, <span className={styles.email}>{email}</span> */}
+        Welcome, <span className={styles.name}>{name}</span>
+      </span>
+
+      <button
+        type="button"
+        title="Log out"
+        aria-label="Log out"
+        onClick={onLogout}
+        className={styles.button}
       >
         Logout
-      </Button>
+      </button>
     </div>
   );
-};
-
-export default UserMenu;
+}
