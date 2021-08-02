@@ -6,8 +6,7 @@
   margin-left: auto;
   margin-right: auto;
   padding: 0 15px;
-   color: darkgoldenrod;
- 
+
   @media screen and (min-width: $mobile) and (max-width: $to-tablet) {
     width: calc(480px - 18px);
   }

@@ -4,15 +4,17 @@ import { CSSTransition } from 'react-transition-group';
 
 import styles from './Title.module.scss';
 
-// Компонент заголовка для страниц
-export default function Title({ children }) {
+// Компонент заголовка для сторінок
+const Title = ({ children }) => {
+// export default function Title({ children }) {      // або use функціональний підхід
+  
   const itemRef = createRef(null);
 
   return (
-    <CSSTransition
+    <CSSTransition 
       in={true}
       appear={true}
-      timeout={500}
+      timeout={250}
       classNames={styles}
       nodeRef={itemRef}
     >
@@ -23,7 +25,7 @@ export default function Title({ children }) {
       </div>
     </CSSTransition>
   );
-}
+};
 
 Title.defaultProps = {
   children: [],
@@ -32,3 +34,5 @@ Title.defaultProps = {
 Title.propTypes = {
   children: PropTypes.node,
 };
+
+export default Title;

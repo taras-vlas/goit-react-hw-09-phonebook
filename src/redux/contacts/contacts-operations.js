@@ -1,9 +1,13 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-import actions from './contacts-actions'; // Импорт экшенов из контактов в операции
+import actions from './contacts-actions'; // Імпорт  аctions в операції  з  контактів-аctions
 
-// Асинхронная операция получения списка контактов (делает запрос, диспатчит экшн получения)
+
+//axios.defaults.baseURL = 'http://localhost:4040';
+
+
+/** Асинхронна операція Отримання списка контактів: запит, dispatch actions отримання */
 const fetchContacts = () => async dispatch => {
   dispatch(actions.fetchContactsRequest());
 
@@ -16,8 +20,7 @@ const fetchContacts = () => async dispatch => {
     toast.error(error.message);
   }
 };
-
-// Асинхронная операция по добавлению контакта (принимает данные с формы, делает запрос, диспатчит экшн добавления)
+/** Асинхронна операція Додавання контакта: пройом даних з форми, запит, dispatch actions додавання */
 const addContact = (name, number) => async dispatch => {
   const contact = { name, number };
 
@@ -26,22 +29,21 @@ const addContact = (name, number) => async dispatch => {
   try {
     const { data } = await axios.post('/contacts', contact);
 
-    toast.success('📗 Contact has been added');
+    toast.success('Added');
     dispatch(actions.addContactSuccess(data));
   } catch (error) {
     dispatch(actions.addContactError(error.message));
     toast.error(error.message);
   }
 };
-
-// Асинхронная операция удаления контакта (принимает id, делает запрос, диспатчит экшн удаления)
+/** Асинхронна операція Видалення контакта: пройом id, запит, dispatch actions видалення */
 const deleteContact = id => async dispatch => {
   dispatch(actions.deleteContactRequest());
 
   try {
     await axios.delete(`/contacts/${id}`);
 
-    toast.info('📕 Contact has been deleted');
+    toast.success('Deleted');
     dispatch(actions.deleteContactSuccess(id));
   } catch (error) {
     dispatch(actions.deleteContactError(error.message));
@@ -50,4 +52,8 @@ const deleteContact = id => async dispatch => {
 };
 
 // eslint-disable-next-line
-export default { fetchContacts, addContact, deleteContact };
+export default {
+  fetchContacts,
+  addContact,
+  deleteContact
+};

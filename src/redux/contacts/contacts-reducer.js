@@ -1,10 +1,19 @@
-import { combineReducers } from '@reduxjs/toolkit'; // Импорт функции комбайна редюсеров
-import { createReducer } from '@reduxjs/toolkit'; // Импорт функции создания редюсера
+import { combineReducers } from '@reduxjs/toolkit'; // Імпорт функції combineReducers   combine reducers
+import { createReducer } from '@reduxjs/toolkit'; // Імпорт функції createReducer створення редюсера
+import actions from './contacts-actions'; // Імпорт actions в редюсери  з contacts-actions
 
-import actions from './contacts-actions'; // Импорт экшенов из контактов в редюсеры
 
-// Создание редюсера для массива items в контактах (фетч всех контактов, добавление и удаление контакта)
+// const initialContacts = [
+//   { id: "id-1", name: "Rosie Simpson", number: "+38-044-459-1256" },
+//   { id: "id-2", name: "Hermione Kline", number: "+38-041-443-8912" },
+//   { id: "id-3", name: "Eden Clements", number: "+38-048-645-1779" },
+//   { id: "id-4", name: "Annie Copeland", number: "+38-042-227-9126" },
+// ];
+
+
+// Створення редюсера для масива items в контактах (фетч усіх контактів, додавння і видалення контакта)
 const items = createReducer([], {
+// const contacts = createReducer(initialContacts, {
   [actions.fetchContactsSuccess]: (_, { payload }) =>
     payload.sort((a, b) => a.name.localeCompare(b.name)),
   [actions.addContactSuccess]: (state, { payload }) => [payload, ...state],
@@ -12,12 +21,12 @@ const items = createReducer([], {
     state.filter(({ id }) => id !== payload),
 });
 
-// Создание редюсера для фильтра в контактах
+// Створення редюсера для фільтра в контактах
 const filter = createReducer('', {
   [actions.changeFilter]: (_, { payload }) => payload,
 });
 
-// Создание редюсера для индикации загрузки контактов
+// Створення редюсера індикації загрузки
 const loading = createReducer(false, {
   [actions.fetchContactsRequest]: () => true,
   [actions.fetchContactsSuccess]: () => false,
@@ -32,7 +41,8 @@ const loading = createReducer(false, {
   [actions.deleteContactError]: () => false,
 });
 
-// Создание редюсера обработки ошибок в контактах
+
+// Створення редюсера обробки помилок
 const error = createReducer(null, {
   [actions.fetchContactsError]: (_, { payload }) => payload,
   [actions.addContactError]: (_, { payload }) => payload,
@@ -48,4 +58,10 @@ const error = createReducer(null, {
   [actions.deleteContactSuccess]: () => null,
 });
 
-export default combineReducers({ items, filter, loading, error });
+// Експорт усіх редюсерів через комбайн
+export default combineReducers({
+  items,
+  filter,
+  loading,
+  error
+});

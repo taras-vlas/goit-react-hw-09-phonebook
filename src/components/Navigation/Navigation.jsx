@@ -1,14 +1,18 @@
-import { useSelector } from 'react-redux';
+// import PropTypes from 'prop-types';        /*** рефакторинг на хуки*/
+// import { connect } from 'react-redux';     /*** рефакторинг на хуки*/
+import { useSelector } from 'react-redux';  /*** рефакторинг на хуки*/
 import { NavLink } from 'react-router-dom';
 
-import { authSelectors } from '../../redux/auth';
+import { authSelectors } from '../../redux/auth'; 
 import routes from '../../routes';
 
-import styles from './Navigation.module.scss';
+import styles from './Navigation.module.scss'; 
 
-// Компонент главной навигации (меню) приложения
-export default function Navigation() {
-  const isAuthenticated = useSelector(authSelectors.getIsAuthenticated); // Селектор статуса авторизации юзера
+// Компонент навигації Bar-меню application(застосування)
+const Navigation = () => {   // const Navigation = ({ isAuthenticated }) => {
+// export default function Navigation() {   // або use функціональний підхід
+  
+  const isAuthenticated = useSelector(authSelectors.getIsAuthenticated); /*** рефакторинг на хуки*/    // Селектор статуса авторизації юзера
 
   return (
     <nav>
@@ -27,7 +31,7 @@ export default function Navigation() {
         {isAuthenticated && (
           <li>
             <NavLink
-              to={routes.PHONEBOOK}
+              to={routes.CONTACTS}
               className={styles.link}
               activeClassName={styles['link--active']}
             >
@@ -39,3 +43,14 @@ export default function Navigation() {
     </nav>
   );
 }
+
+// Navigation.propTypes = {
+//   isAuthenticated: PropTypes.bool.isRequired,
+// };
+
+// const mapStateToProps = state => ({
+//   isAuthenticated: authSelectors.getIsAuthenticated(state),
+// });
+
+// export default connect(mapStateToProps, null)(Navigation);
+export default Navigation;

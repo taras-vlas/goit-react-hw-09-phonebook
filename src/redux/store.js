@@ -1,21 +1,22 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'; // Импорт функции создания хранилища и прослойки
 import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist'; // Импорт функции персистеров и фикса консоли
-import storage from 'redux-persist/lib/storage'; // Импорт локального хранилища
-import logger from 'redux-logger'; // Импорт логгера
+    persistStore,
+    persistReducer,
+    
+    FLUSH,
+    REHYDRATE,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER,
+    } from 'redux-persist'; // Імпорт функції персистерів і фікса консолі
+import storage from 'redux-persist/lib/storage'; // Імпорт локального сховища
+import logger from 'redux-logger'; // Імпорт логгера
 
-import { authReducer } from './auth'; // Импорт редюсера по авторизации
-import { contactsReducer } from './contacts'; // Импорт редюсера по контактам
+import { authReducer } from './auth'; // Імпорт редюсера по авторизації
+import { contactsReducer } from './contacts'; // Імпорт редюсера по контактам
 
-// Создание прослоек + логгер. Важен порядок!
+// Створення прослойок middleware + логгер. Важливий порядок!!!
 const middleware = [
   ...getDefaultMiddleware({
     serializableCheck: {

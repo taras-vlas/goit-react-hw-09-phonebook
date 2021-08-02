@@ -1,19 +1,28 @@
-//  Spinner
 import Spinner from 'react-loader-spinner';
+import styles from './Loader.module.scss';
 
+//  Компонент  Spinner
 export default function Loader() {
   return (
-    <Spinner
-      role="alert"          
-      type="Circles"
-      color="#00BFFF"
-      width={40}
-      height={40}
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        margin: '5px',
-      }}
-    />
+    
+    <div className={styles.loader}>
+      <Spinner
+        role="alert"          
+        type="Circles"
+        color="#00BFFF"
+        width={40}
+        height={40}
+      />
+    </div>
   );
 }
+
+
+
+// const Loader = () => (
+//   <div className={styles.loader}>
+  
+//   </div>
+// );
+
+// export default Loader;

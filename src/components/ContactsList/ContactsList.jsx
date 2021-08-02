@@ -1,20 +1,70 @@
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+import contactsOperations from '../../redux/contacts/contacts-operations';
+import contactsSelectors from '../../redux/contacts/contacts-selectors';
+import styles from './ContactList.module.css';  //styles from 
+//import styled from 'styled-components'
 
-import { contactsSelectors } from '../../redux/contacts';
+import ContactListItem from './ContactListItem';
 
-import ContactItem from '../ContactItem';
 
-import styles from './ContactsList.module.scss';
-
-// Компонент списка контактов
-export default function ContactsList() {
-  const contacts = useSelector(contactsSelectors.getfilteredContacts); // Селектор всех контактов
-
+const ContactsList = ({ contacts, onDelete }) => {
   return (
-    <ul className={styles.list}>
-      {contacts.map(contact => (
-        <ContactItem key={contact.id} contact={contact} />
+    <ul className={styles.TodoList}>
+      {contacts.map(({ id, name, number }) => (
+        <ContactListItem
+          key={id}       //{contact.id}
+          name={name}
+          number={number}
+          //contact={contact}
+          onDelete={() => onDelete(id)}
+        />
+        // <li key={id} className={styles.list}>
+        //   <div className={styles.buttonContainer}>
+        //     <button className={styles.delete} onClick={() => onDelete(id)}>
+        //       -
+        //     </button>
+        //   </div>
+        //   <div>
+        //     <p className={styles.name}>{name} </p>
+        //     <span className={styles.number}>{number}</span>
+        //   </div>
+        // </li>
       ))}
     </ul>
   );
-}
+};
+// const List = styled.ul`
+//   width: 500px;
+// `;
+
+
+const mapStateToProps = state => ({
+  contacts: contactsSelectors.getfilteredContacts(state),   //getInputContacts(state), getContacts(state),
+});
+
+const mapDispatchToProps = dispatch => ({
+  onDelete: id => dispatch(contactsOperations.deleteContact(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactsList);
+
+
+
+// ContactsList.propTypes = {
+//   contacts: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.string.isRequired,
+//       name: PropTypes.string.isRequired,
+//       number: PropTypes.string.isRequired,
+//     }),
+//   ),
+//   onDelete: PropTypes.func.isRequired,
+// };
+
+
+
+
+
+
+

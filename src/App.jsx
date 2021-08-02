@@ -1,87 +1,100 @@
 import { Suspense, lazy, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Switch } from 'react-router-dom';
-
-//import { ToastContainer } from 'react-toastify';
+//import { connect } from 'react-redux';  /*** рефакторинг на хуки*/
+import { useDispatch } from 'react-redux';  /*** рефакторинг на хуки*/
+import { Switch } from 'react-router-dom'; 
 
 import routes from './routes';
 import { authOperations } from './redux/auth';
 
 import Container from './components/Container';
-import AppBar from './components/AppBar';
-//import AppFooter from './components/AppFooter';
+import AuthBar from './components/AuthBar';
 import Loader from './components/Loader';
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 
+import { ToastContainer } from 'react-toastify';
+//import Alert from '@material-ui/lab/Alert';
 import 'react-toastify/dist/ReactToastify.css';
 
-const HomeView = lazy(() =>
-  import('./Views/HomeView' /* webpackChunkName: "home-page" */),
+
+const HomePage = lazy(() =>
+  import('./views/HomePage' /* webpackChunkName: "home-page" */),
 );
-const PhoneBookView = lazy(() =>
-  import('./Views/PhoneBookView' /* webpackChunkName: "Phone-book-page" */),
+const RegistrationPage = lazy(() =>
+  import('./views/RegistrationPage' /* webpackChunkName: "register-page" */),
 );
-const RegisterView = lazy(() =>
-  import('./Views/RegisterView' /* webpackChunkName: "register-page" */),
+const ContactsPage = lazy(() =>
+  import('./views/ContactsPage' /* webpackChunkName: "contacts-page" */),
 );
-const LoginView = lazy(() =>
-  import('./Views/LoginView' /* webpackChunkName: "login-page" */),
+const LoginPage = lazy(() =>
+  import('./views/LoginPage' /* webpackChunkName: "login-page" */),
 );
 const PageNotFound = lazy(() =>
-  import('./Views/PageNotFound' /* webpackChunkName: "404-page-not-found" */),
+  import('./views/PageNotFound' /* webpackChunkName: "404-page" */),
 );
 
-export default function App() {
-  const dispatch = useDispatch();
 
-  // Получение текущего юзера при маунте приложения
+const App = () => {  //const App = ({ getCurrentUser }) => {
+// export default function App() {  // або use функціональний підхід 
+  
+  
+   const dispatch = useDispatch();
+// Отримання поточного юзера при маунті application/застосування
   useEffect(() => {
-    dispatch(authOperations.getCurrentUser());
+  //   getCurrentUser();    
+  // }, [getCurrentUser]);
+  dispatch(authOperations.getCurrentUser());       /*** рефакторинг на хуки*/
   }, [dispatch]);
+
 
   return (
     <Container>
-      <AppBar />
+      <AuthBar />
 
       <Suspense fallback={<Loader />}>
         <Switch>
-          
+
           <PublicRoute
-            exact path={routes.HOME}>
-            <HomeView />
+            exact path={routes.HOME}
+            // component={HomePage}
+          >
+                <HomePage />
           </PublicRoute>
 
           <PublicRoute
             path={routes.REGISTRATION}
+            component={RegistrationPage}
             restricted
-            redirectTo={routes.PHONEBOOK}>
-            <RegisterView />
-          </PublicRoute>
-
+            redirectTo={routes.CONTACTS} />
+                  
           <PublicRoute
             path={routes.LOGIN}
+            component={LoginPage}
             restricted
-            redirectTo={routes.PHONEBOOK}>
-            <LoginView />
+            redirectTo={routes.CONTACTS}>
+               {/* <LoginPage /> */}
           </PublicRoute>
-
+                   
           <PrivateRoute
-            path={routes.PHONEBOOK}
+            path={routes.CONTACTS}
+            component={ContactsPage}
             redirectTo={routes.LOGIN}>
-            <PhoneBookView /> 
-          </PrivateRoute>          
+                {/* <ContactsPage /> */}
+          </PrivateRoute>  
 
-          <PublicRoute>
-            <PageNotFound />
-          </PublicRoute>
-          
+          <PublicRoute component={PageNotFound} />
+
         </Switch>
       </Suspense>
 
-      {/* <AppFooter /> */}
-
-      {/* <ToastContainer autoClose={2500} /> */}
+      <ToastContainer autoClose={2000} />
     </Container>
   );
-}
+};
+
+// const mapDispatchToProps = {
+//   getCurrentUser: authOperations.getCurrentUser,
+// };
+
+// export default connect(null, mapDispatchToProps)(App);
+export default App;

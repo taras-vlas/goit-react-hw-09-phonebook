@@ -42,7 +42,7 @@
     "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "api-server": "json-server --delay 300 --port 4040 --watch db.json"
+    "api-server": "json-server --delay 300 --port 4040 --watch src/api/db.json"
   },
   "eslintConfig": {
     "extends": [

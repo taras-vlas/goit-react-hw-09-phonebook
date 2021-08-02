@@ -10,14 +10,14 @@
 // Title text
 .title {
   display: inline;
-  margin: 50px 0;
+  margin: 10px 0;
 
   font-size: 1.5rem;
 
   color: $main-color;
 
   opacity: 1;
-  transition: opacity $transition-duration 1s;
+  transition: opacity $transition-duration linear;
 
   cursor: default;
 
@@ -39,5 +39,5 @@
 
 .appearActive {
   transform: translateX(0);
-  transition: all 500ms linear;
+  transition: all 150ms linear;
 }

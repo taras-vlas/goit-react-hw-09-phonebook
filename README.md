@@ -68,3 +68,25 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+
+# Критерии приема  goit-react-hw-09-phonebook.
+При сдаче домашней работы есть ссылки: на исходные файлы и рабочую страницу проектов на GitHub pages.
+При запуске кода задания, в консоли нету ошибок и предупреждений.
+Основное задание - Книга контактов
+Создай репозиторий goit-react-hw-09-phonebook.
+Выполни рефакторинг кода задания «Книга контактов» https://github.com/goitacademy/react-homework/blob/master/homework-08/README.md
+на хуки.
+Дополнительная практика
+Дополнительные задания не сдаются в Schoology. Эта практика «для себя», а к ментору обращаемся если столкнулись с проблемой.
+
+Виджет отзывов
+Создай репозиторий goit-react-hw-09-feedback.
+Выполни рефакторинг кода задания «Виджет отзывов» https://github.com/goitacademy/react-homework/blob/master/homework-02/feedback/README.md
+на хуки.
+Поиск изображений
+Создай репозиторий goit-react-hw-09-images.
+Выполни рефакторинг кода задания «Поиск изображений» https://github.com/goitacademy/react-homework/blob/master/homework-03/image-finder/README.md
+на хуки.

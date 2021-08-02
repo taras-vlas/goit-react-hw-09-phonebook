@@ -6,32 +6,32 @@
 }
 
 // Image container
-// .thumb {
-//   margin: 0 auto;
+.thumb {
+  margin: 0 auto;
 
-//   max-width: 200px;
+  max-width: 200px;
 
-//   @media screen and (min-width: $mobile) {
-//     max-width: 320px;
-//   }
-// }
+  @media screen and (min-width: $mobile) {
+    max-width: 320px;
+  }
+}
 
 // Main image on page
-// .image {
-//   max-width: 100%;
-//   margin-bottom: 15px;
+.image {
+  max-width: 100%;
+  margin-bottom: 15px;
 
-//   animation: spin 12s infinite linear;
-// }
+  animation: spin 12s infinite linear;
+}
 
 // Error description
 .text {
-  margin-bottom: 25px;
+  margin-bottom: 32px;
 }
 
 // Home button
 .button {
-  padding: 5px;
+  padding: 10px;
 
   border: 0px solid transparent;
   border-radius: 4px;
@@ -39,7 +39,7 @@
   text-decoration: none;
 
   color: $clear-color;
-  background-color: $main-btnContact-color;
+  background-color: $main-color;
 
   box-shadow: $main-shadow;
 
@@ -48,7 +48,7 @@
 
   &:hover,
   &:focus {
-    opacity: 0.7;
+    opacity: 0.8;
 
     transition: opacity $transition-duration $timing-function;
   }
@@ -60,11 +60,11 @@
 }
 
 // Animation for image
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+// @keyframes spin {
+//   from {
+//     transform: rotate(0deg);
+//   }
+//   to {
+//     transform: rotate(360deg);
+//   }
+// }

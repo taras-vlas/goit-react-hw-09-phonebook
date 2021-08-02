@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
-import { Provider } from 'react-redux'; // Импорт провайдера для хранилища
+import { Provider } from 'react-redux'; // Імпорт провайдера для сховища/store
 import { PersistGate } from 'redux-persist/integration/react';
-import store from './redux/store'; // Импорт обьекта из стора (хранилище)
+import store from './redux/store'; // Імпорт  об'єкта зі store/сховища
 
 import App from './App.jsx';
 import Loader from './components/Loader';

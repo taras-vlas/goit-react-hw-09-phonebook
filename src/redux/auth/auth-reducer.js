@@ -6,7 +6,7 @@ const initialUserState = {
   email: null,
 };
 
-// Редюсер для регистрации, авторизации и выхода из профиля
+// Редюсер для реєстрації, авторизації та выходу з профіля
 const user = createReducer(initialUserState, {
   [authActions.registerSuccess]: (_, { payload }) => payload.user,
   [authActions.loginSuccess]: (_, { payload }) => payload.user,
@@ -14,14 +14,14 @@ const user = createReducer(initialUserState, {
   [authActions.getCurrentUserSuccess]: (_, { payload }) => payload,
 });
 
-// Редюсер для токенов
+// Редюсер для токенів
 const token = createReducer(null, {
   [authActions.registerSuccess]: (_, { payload }) => payload.token,
   [authActions.loginSuccess]: (_, { payload }) => payload.token,
   [authActions.logoutSuccess]: () => null,
 });
 
-// Редюсер для индикации авторизации
+// Редюсер для індикації авторизації
 const isAuthenticated = createReducer(false, {
   [authActions.registerSuccess]: () => true,
   [authActions.loginSuccess]: () => true,
@@ -34,29 +34,10 @@ const isAuthenticated = createReducer(false, {
   [authActions.logoutSuccess]: () => false,
 });
 
-// Создание редюсера для индикации авторизации
-const loading = createReducer(false, {
-  [authActions.registerRequest]: () => true,
-  [authActions.registerSuccess]: () => false,
-  [authActions.registerError]: () => false,
-
-  [authActions.loginRequest]: () => true,
-  [authActions.loginSuccess]: () => false,
-  [authActions.loginError]: () => false,
-
-  [authActions.logoutRequest]: () => true,
-  [authActions.logoutSuccess]: () => false,
-  [authActions.logoutError]: () => false,
-
-  [authActions.getCurrentUserRequest]: () => true,
-  [authActions.getCurrentUserSuccess]: () => false,
-  [authActions.getCurrentUserError]: () => false,
-});
-
-// Обработку ошибок можно абстрагировать
+// Обработку помилок можна абстрагувати
 // const setError = (_, { payload }) => payload;
 
-// Редюсер для обработки ошибок
+// Редюсер для обробки помилок            
 const error = createReducer(null, {
   [authActions.registerError]: (_, { payload }) => payload,
   [authActions.loginError]: (_, { payload }) => payload,
@@ -68,6 +49,5 @@ export default combineReducers({
   user,
   token,
   isAuthenticated,
-  loading,
   error,
 });

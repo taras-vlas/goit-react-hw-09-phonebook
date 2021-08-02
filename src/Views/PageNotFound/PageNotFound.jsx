@@ -1,44 +1,50 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react';          /*** рефакторинг на хуки*/
 import { NavLink } from 'react-router-dom';
+
 import routes from '../../routes';
-
-import Title from '../../components/Title';
-//import { ReactComponent as SpaceImage } from '../../assets/images/404.svg';
-
+//import Title from '../../components/Title';
+import { ReactComponent as SpaceImage } from '../../assets/images/404.svg';
 import styles from './PageNotFound.module.scss';
 
-// Компонент страницы 404
-export default function PageNotFound() {
-  // Сетит title страницы при маунте компонента
-  useEffect(() => {
+// Компонент сторінки 404
+const PageNotFound = () => {
+//export default function PageNotFound() {   // або use функціональний підхід 
+ 
+  
+   /* 
+   *  Схожий на componentDidMount и componentDidUpdate:
+   */
+  useEffect(() => {                        /*** рефакторинг на хуки*/ 
+    // Оновлює назву докуммента, використовуючи API браузера
     document.title = 'Error 404 | Phonebook';
-  }, []);
+  }  , []  );     // Сетить title строрінки при маунті компонента
+
 
   return (
     <div className={styles.container}>
-      <Title>Page not found</Title>
-
+   
       <div className={styles.thumb}>
-        
-          {/* title="Error 404"
+        <SpaceImage
+          className={styles.image}
+          title="Error 404"
           alt="Error 404"
-          className={styles.image} */}
-          <h1 >Error 404</h1>
-       
+        />
       </div>
 
       <p className={styles.text}>
-        This page is missing. Error 404
+        Error 404   You’re looking for page is missing because it was moved, renamed, or deleted.
       </p>
 
       <NavLink
         to={routes.HOME}
         className={styles.button}
-        title="Return to Home"
-        aria-label="Return to Home page"
+        title="Go to page Home"
+        aria-label="Return to homepage"
       >
-        Return to Home page
+        Go to page Home
       </NavLink>
     </div>
   );
 }
+
+export default PageNotFound;

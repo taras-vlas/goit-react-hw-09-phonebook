@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
 import authActions from './auth-actions';
+
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
-// Обьект токена
+
+// Об'єкт токена
 const token = {
   set(token) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -16,7 +17,9 @@ const token = {
   },
 };
 
-// Операция регистрации юзера
+/* Redux-операции для работы с асинхронными запросами по паттерну request, success и error */
+
+// Redux-Операція реєстрації юзера
 const register = credentials => async dispatch => {
   dispatch(authActions.registerRequest());
 
@@ -31,7 +34,7 @@ const register = credentials => async dispatch => {
   }
 };
 
-// Операция авторизации юзера
+// Redux-Операція авторизації юзера
 const logIn = credentials => async dispatch => {
   dispatch(authActions.loginRequest());
 
@@ -46,7 +49,7 @@ const logIn = credentials => async dispatch => {
   }
 };
 
-// Операция выхода из профиля
+// Redux-Операція виходу з профіля
 const logOut = () => async dispatch => {
   dispatch(authActions.logoutRequest());
 
@@ -61,8 +64,9 @@ const logOut = () => async dispatch => {
   }
 };
 
-// Операция получения текущего пользователя (проверяем локальное хранилище через персист)
+// Redux-Операція отримання поточного користувача (перевірка локального сховища через персист)
 const getCurrentUser = () => async (dispatch, getState) => {
+  
   const {
     auth: { token: persistedToken },
   } = getState();
@@ -84,4 +88,9 @@ const getCurrentUser = () => async (dispatch, getState) => {
 };
 
 // eslint-disable-next-line
-export default { register, logIn, logOut, getCurrentUser };
+export default {
+  register,
+  logIn,
+  logOut,
+  getCurrentUser
+};
