@@ -23,7 +23,7 @@ const RegistrationForm = () => {   //const RegistrationForm = ({ onRegister }) =
 
 
   
-  const isLoading = useSelector(authSelectors.getIsAuthenticated); // Селектор статуса загрузки
+  const isLoading = useSelector(authSelectors.getLoading); // Селектор статуса загрузки
 
   const dispatch = useDispatch();
 

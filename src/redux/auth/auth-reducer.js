@@ -34,7 +34,7 @@ const isAuthenticated = createReducer(false, {
   [authActions.logoutSuccess]: () => false,
 });
 
-// Обработку помилок можна абстрагувати
+// Обробку помилок можна абстрагувати
 // const setError = (_, { payload }) => payload;
 
 // Редюсер для обробки помилок            
@@ -45,9 +45,32 @@ const error = createReducer(null, {
   [authActions.getCurrentUserError]: (_, { payload }) => payload,
 });
 
+
+// Створення редюсера для індикації авторизації
+const loading = createReducer(false, {
+  [authActions.registerRequest]: () => true,
+  [authActions.registerSuccess]: () => false,
+  [authActions.registerError]: () => false,
+
+  [authActions.loginRequest]: () => true,
+  [authActions.loginSuccess]: () => false,
+  [authActions.loginError]: () => false,
+
+  [authActions.logoutRequest]: () => true,
+  [authActions.logoutSuccess]: () => false,
+  [authActions.logoutError]: () => false,
+
+  [authActions.getCurrentUserRequest]: () => true,
+  [authActions.getCurrentUserSuccess]: () => false,
+  [authActions.getCurrentUserError]: () => false,
+});
+
+
 export default combineReducers({
   user,
   token,
   isAuthenticated,
   error,
+
+  loading,
 });

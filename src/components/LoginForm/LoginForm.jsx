@@ -157,7 +157,7 @@ const LoginForm = () => {   //const LoginForm = ({ onLogin }) => {    /*** ре�
 
 
 
-  const isLoading = useSelector(authSelectors.getIsAuthenticated);  /*** рефакторинг на хуки*/  // Селектор статуса загрузки
+  const isLoading = useSelector(authSelectors.getLoading);  /*** рефакторинг на хуки*/  // Селектор статуса загрузки
 
   const dispatch = useDispatch();   /*** рефакторинг на хуки*/
 

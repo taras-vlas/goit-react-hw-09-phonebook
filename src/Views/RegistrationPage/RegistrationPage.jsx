@@ -10,7 +10,7 @@ import Loader from '../../components/Loader';  /*** рефакторинг на 
 // Компонент сторінки реєстрації
 const RegistrationPage = () => {
 //export default function RegisterPage() {  // або use функціональний підхід 
-  const isLoading = useSelector(authSelectors.getIsAuthenticated); /*** рефакторинг на хуки*/ // Селектор статуса загрузки з контактів
+  const isLoading = useSelector(authSelectors.getLoading); /*** рефакторинг на хуки*/ // Селектор статуса загрузки з контактів
 
 
   /* 
@@ -18,7 +18,7 @@ const RegistrationPage = () => {
    */
   useEffect(() => {
     // Оновлює назву докуммента, використовуючи API браузера
-    document.title = 'Create account | Phonebook';
+    document.title = 'Create account .';
   }  , []  );     // Сетить title строрінки при маунті компонента
 
 
@@ -28,7 +28,7 @@ const RegistrationPage = () => {
 
       <RegistrationForm />
 
-      {isLoading && <Loader> L-OOO-G Reg</Loader>}
+      {isLoading && <Loader> L-OOO-G </Loader>}
     </main>
   );
 }

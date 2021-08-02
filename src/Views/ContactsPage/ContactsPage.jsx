@@ -30,7 +30,7 @@ const ContactsPage = () => {
    */
   useEffect(() => {
     // Оновлює назву докуммента, використовуючи API браузера
-    document.title = 'Contacts list | Phonebook';
+    document.title = 'Contacts list .';
   }  , []  );     // Сетить title строрінки при маунті компонента
 
 

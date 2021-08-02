@@ -17,7 +17,7 @@ const HomePage = () => {
    */
   useEffect(() => {
     // Оновлює назву докуммента, використовуючи API браузера
-    document.title = 'Phonebook | React Application';
+    document.title = 'React Application';
   }  , []  );     // Сетить title строрінки при маунті компонента
 
   

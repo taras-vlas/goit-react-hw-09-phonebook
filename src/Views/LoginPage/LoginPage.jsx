@@ -10,7 +10,7 @@ import Loader from '../../components/Loader';
 // Компонент сторінки автозирації
 const LoginPage = () => {
 //export default function LoginPage() {   // або use функціональний підхід 
-  const isLoading = useSelector(authSelectors.getIsAuthenticated); /*** рефакторинг на хуки*/ // Селектор статуса загрузки з контактів
+  const isLoading = useSelector(authSelectors.getLoading); /*** рефакторинг на хуки*/ // Селектор статуса загрузки з контактів
   
 
   /* 
@@ -18,7 +18,7 @@ const LoginPage = () => {
    */
   useEffect(() => {
     // Оновлює назву докуммента, використовуючи API браузера
-    document.title = 'Log in to App | Phonebook';
+    document.title = 'Log in to App .';
   }  , []  );     // Сетить title строрінки при маунті компонента
 
   
@@ -28,7 +28,7 @@ const LoginPage = () => {
 
       <LoginForm />
 
-      {isLoading && <Loader> L-OOO-G Log</Loader>}  
+      {isLoading && <Loader> L-OOO-G </Loader>}  
     </main>
   );
 }

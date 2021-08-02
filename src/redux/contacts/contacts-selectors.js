@@ -3,7 +3,7 @@ import { createSelector } from '@reduxjs/toolkit'; // Імпорт функці�
 const getLoading = state => state.contacts.loading;
 const getFilter = state => state.contacts.filter;
 const getContacts = state => state.contacts.items;
-  console.log('getContacts', getContacts);
+  console.log('getContacts:', getContacts);
 const getError = state => state.contacts.error;
 
 // Мемоізація функції фільтра контактів на базі композитного селектора

@@ -16,7 +16,7 @@ const PageNotFound = () => {
    */
   useEffect(() => {                        /*** рефакторинг на хуки*/ 
     // Оновлює назву докуммента, використовуючи API браузера
-    document.title = 'Error 404 | Phonebook';
+    document.title = 'Error 404 .';
   }  , []  );     // Сетить title строрінки при маунті компонента
 
 
